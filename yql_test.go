@@ -1,4 +1,4 @@
-package stockfeed
+package yql
 
 import (
     "testing"
