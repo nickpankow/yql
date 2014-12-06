@@ -16,6 +16,13 @@ type YQL struct {
 }
 
 /**
+    Interface representing a YQL server
+ */
+type YQLServer interface{
+    Query(q string) (*Response, error)
+}
+
+/**
     The data response received from a YQL Query
  */
 type Response struct{
