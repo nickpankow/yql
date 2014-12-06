@@ -106,7 +106,13 @@ func BuildQuery(fields []string, tables []string, where []string, andOr []bool) 
     query_buffer.WriteString(" where ")
     for key, value := range where{
         if key > 0 {
-            if andOr[key - 1] == true{
+            a := true
+            if len(andOr) == 1{
+                a = andOr[0]
+            } else {
+                a = andOr[key - 1]
+            }
+            if a == true{
                 query_buffer.WriteString(" AND ")
             } else {
                 query_buffer.WriteString(" OR ")
