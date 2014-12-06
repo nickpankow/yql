@@ -27,20 +27,19 @@ type Response struct{
     Send a YQL query to the Yahoo! servers specified in the YQL object.  Returns Response struct with
     response from server.
  */
-func (y *YQL) Query(q string) (Response, error){
-    var r Response
+func (y *YQL) Query(q string) (*Response, error){
     queryUrl := y.buildURL(q)
     resp, err := http.Get(queryUrl)
     
     // HTTP error
     if err != nil {
-        return r, err
+        return nil, err
     }
     
     resp_str, err := ioutil.ReadAll(resp.Body)
     // Read error
     if err != nil {
-        return r, err
+        return nil, err
     }
     defer resp.Body.Close()
     
@@ -49,12 +48,12 @@ func (y *YQL) Query(q string) (Response, error){
     err = json.Unmarshal(resp_str, &jsonArray)
     // JSON error
     if err != nil {
-        return r, err
+        return nil, err
     }
 
     // TODO: Revisit once understand of type system is better.  Lacks safety (i think?)
     jsonArray = (jsonArray["query"]).(map[string]interface{})
-    r = Response{ jsonArray["created"].(string), jsonArray["lang"].(string), jsonArray["results"].(map[string]interface{}) }
+    r := &Response{ jsonArray["created"].(string), jsonArray["lang"].(string), jsonArray["results"].(map[string]interface{}) }
 
     return r, err
 }
