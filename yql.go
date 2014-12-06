@@ -75,9 +75,9 @@ func (y *YQL) buildURL(query string) (string){
 /**
     Helper function to create the actual YQL query string
  */
-func BuildQuery(fields []string, tables []string, where []string, andOr bool) (string) {
+func BuildQuery(fields []string, tables []string, where []string, andOr []bool) (string) {
     // Validate
-    if len(fields) == 0 || len(tables) == 0 || len(where) == 0{
+    if len(fields) == 0 || len(tables) == 0 || len(where) == 0 || len(andOr) == 0{
         return ""
     }
     
@@ -106,7 +106,7 @@ func BuildQuery(fields []string, tables []string, where []string, andOr bool) (s
     query_buffer.WriteString(" where ")
     for key, value := range where{
         if key > 0 {
-            if andOr == true{
+            if andOr[key - 1] == true{
                 query_buffer.WriteString(" AND ")
             } else {
                 query_buffer.WriteString(" OR ")
