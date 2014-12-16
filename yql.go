@@ -31,6 +31,16 @@ type Response struct{
 }
 
 /**
+    Creates a YQL connection object with default connection parameters.
+    URL: https://query.yahooapis.com/v1/public/yql
+    Included Tables: http://datatables.org/alltables.env
+    Data Format: json
+ */
+func Default() (y *YQL) {
+    return &YQL{"https://query.yahooapis.com/v1/public/yql", "http://datatables.org/alltables.env", "json"}
+}
+
+/**
     Send a YQL query to the Yahoo! servers specified in the YQL object.  Returns Response struct with
     response from server.
  */
